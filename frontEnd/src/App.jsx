@@ -18,14 +18,26 @@ function App() {
   };
 
   const agregarPost = async () => {
+    if (!titulo || !imgSrc || !descripcion) {
+      console.error("Todos los campos son obligatorios");
+      return;
+    }
+
     const post = { titulo, url: imgSrc, descripcion };
-    await axios.post(urlBaseServer + "/posts", post);
-    getPosts();
+
+    try {
+      await axios.post(urlBaseServer + "/posts", post);
+      console.log("Post agregado exitosamente");
+
+      getPosts();
+    } catch (error) {
+      console.error("Error al agregar el post:", error);
+    }
   };
 
   // este método se utilizará en el siguiente desafío
   const like = async (id) => {
-    await axios.put(urlBaseServer + `/posts/like/${id}`);
+    await axios.put(urlBaseServer + `/posts/${id}`);
     getPosts();
   };
 
