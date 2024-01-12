@@ -39,7 +39,10 @@ const updatePostController = async (req, res) => {
     const updatedPost = await updatePost(id, req.body);
     res.status(200).json(updatedPost);
   } catch (error) {
-    console.error("Error en la solicitud:", error);
+    const specificError = ERRORS.filter((e) => e.code === error.code);
+    return res
+      .status(specificError[0].status)
+      .json({ error: specificError[0].message });
   }
 };
 
@@ -52,7 +55,10 @@ const deletePostController = async (req, res) => {
       deletedPost,
     });
   } catch (error) {
-    console.error("Error en la solicitud:", error);
+    const specificError = ERRORS.filter((e) => e.code === error.code);
+    return res
+      .status(specificError[0].status)
+      .json({ error: specificError[0].message });
   }
 };
 export {

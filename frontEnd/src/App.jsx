@@ -44,6 +44,7 @@ function App() {
   // este método se utilizará en el siguiente desafío
   const eliminarPost = async (id) => {
     await axios.delete(urlBaseServer + `/posts/${id}`);
+    console.log("Post con eliminado correctamente");
     getPosts();
   };
 
